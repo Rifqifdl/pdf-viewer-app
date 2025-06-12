@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <h3>PDF Viewer</h3>
+        <h3 className='text-navy'>PDF Viewer</h3>
         <PDFviewer />
       </div>
     </>

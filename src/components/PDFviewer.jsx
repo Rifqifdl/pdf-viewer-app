@@ -49,10 +49,17 @@ export default function PDFviewer() {
     };
 
     const reset = () => {
-        const newScale = setScale(1.0);
+        const screenWidth = window.innerWidth;
+        let newScale = 1.0;
+        if (screenWidth < 460) {
+            newScale = 0.5;
+        } else if (screenWidth < 768) {
+            newScale = 0.8;
+        }
+        setScale(newScale);
         showZoomPercentOverlay();
         return newScale;
-    }
+    };
     
     const rotateLeft = () => setRotate((prevRotate) => Math.max(prevRotate - 90));
     const rotateRight = () => setRotate((prevRotate) => Math.max(prevRotate + 90));
@@ -128,51 +135,70 @@ export default function PDFviewer() {
             setMatchIndexes([]); //Reset jumlah kata yang cocok
             setActiveMatch(0); //reset kata cocok yang aktif
         }
-    }
+    };
 
     useEffect(() => {
         highlight();
     });
 
+    // Responsive Scale
+    useEffect(() => {
+        const screenWidth = window.innerWidth;
+            if (screenWidth < 480) {
+                setScale(0.5);
+            } else if (screenWidth < 768) {
+                setScale(0.8);
+            } else {
+                setScale(1.0);
+            }
+    }, []);
+
     return (
-        <div>
-            {/* ========== GET PDF ==========*/}
-            <TransformWrapper wheel={{ disabled: true }} doubleClick={{disabled: true}}>
-                <TransformComponent>
-                    <Document
-                        file="https://api.nextbv.app/v1/files/e2a5032e-ca35-4993-979a-5007f0546578/content" //GET PDF from API
+        <div className="container">
+            <div className='pdf-container'>
+                {/* ========== GET PDF ==========*/}
+                <TransformWrapper initialScale={1}
+                    minScale={0.5}
+                    maxScale={4}
+                    doubleClick={{mode:"reset"}}
+                    limitToBounds={false}
+                    wheel={{disabled: true}}>
+                    <TransformComponent>
+                        <Document
+                            file="https://api.nextbv.app/v1/files/e2a5032e-ca35-4993-979a-5007f0546578/content" //GET PDF from API
+                            
+                            // Handle Loading
+                            onLoadSuccess={({ numPages }) => {
+                                setNumPages(numPages);
+                                setLoading(false);
+                                console.log(`PDF loaded with ${numPages} pages`);
+                            }}
+                            
+                            // Handle Error
+                            onLoadError={(error) => {
+                                setError(error.message || "Failed to load PDF");
+                                setLoading(false);
+                                console.error("Error loading PDF", error);
+                            }}
+                        >
                         
-                        // Handle Loading
-                        onLoadSuccess={({ numPages }) => {
-                            setNumPages(numPages);
-                            setLoading(false);
-                            console.log(`PDF loaded with ${numPages} pages`);
-                        }}
+                        {/* Handle Loading & Error */}
+                        {loading && <p className='text-navy'>Loading PDF...</p>}
+                        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
                         
-                        // Handle Error
-                        onLoadError={(error) => {
-                            setError(error.message || "Failed to load PDF");
-                            setLoading(false);
-                            console.error("Error loading PDF", error);
-                        }}
-                    >
-                    
-                    {/* Handle Loading & Error */}
-                    {loading && <p>Loading PDF...</p>}
-                    {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                    
-                    {!loading && !error && (
-                        <Page 
-                            pageNumber={pageNumber} 
-                            scale={scale}
-                            rotate={rotate}
-                            renderTextLayer={true}
-                            onRenderSuccess={highlight}
-                        />
-                    )}
-                    </Document>
-                </TransformComponent>
-            </TransformWrapper>
+                        {!loading && !error && (
+                            <Page 
+                                pageNumber={pageNumber} 
+                                scale={scale}
+                                rotate={rotate}
+                                renderTextLayer={true}
+                                onRenderSuccess={highlight}
+                            />
+                        )}
+                        </Document>
+                    </TransformComponent>
+                </TransformWrapper>
+            </div>
             
             {/* ========== CUSTOM CONTAINER ==========*/}
             <div className="wrapper">
@@ -211,7 +237,7 @@ export default function PDFviewer() {
                             min="1"
                             max={numPages}
                         />
-                        <p style={{fontSize: '15px'}}>of {numPages}</p>
+                        <span className='text'>of {numPages}</span>
                         <button onClick={nextPage} className="btn btn-primary" title='Next Page'><FontAwesomeIcon icon={faChevronRight} /></button>
                     </div>
                     
@@ -234,7 +260,7 @@ export default function PDFviewer() {
                             title='Previous Result'
                         ><FontAwesomeIcon icon={faChevronUp} /> </button>
                         
-                        <span>
+                        <span className='text'>
                             {matchIndexes.length > 0 ? `${activeMatch + 1}/${matchIndexes.length}` : ''}
                         </span>
                         
@@ -246,8 +272,8 @@ export default function PDFviewer() {
                             className="btn btn-primary"
                             title='Next Result'
                         ><FontAwesomeIcon icon={faChevronDown} /></button>
+                    
                     </div>
-
                 </div>
             </div>
         </div>
