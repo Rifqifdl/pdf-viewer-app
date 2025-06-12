@@ -202,7 +202,7 @@ export default function PDFviewer() {
                     
                     {/* ========== NAVIGATION BUTTON ==========*/}
                     <div className="action-area right-border">
-                        <button onClick={prevPage} className="btn btn-primary" title='Next Page'><FontAwesomeIcon icon={faChevronLeft} /></button>
+                        <button onClick={prevPage} className="btn btn-primary" title='Previous Page'><FontAwesomeIcon icon={faChevronLeft} /></button>
                         <input
                             type="number"
                             className="input input-page no-spinner"
@@ -212,7 +212,7 @@ export default function PDFviewer() {
                             max={numPages}
                         />
                         <p style={{fontSize: '15px'}}>of {numPages}</p>
-                        <button onClick={nextPage} className="btn btn-primary" title='Previous Page'><FontAwesomeIcon icon={faChevronRight} /></button>
+                        <button onClick={nextPage} className="btn btn-primary" title='Next Page'><FontAwesomeIcon icon={faChevronRight} /></button>
                     </div>
                     
                     {/* ========== SEARCH & HIGHLIGHT ==========*/}
