@@ -1,12 +1,24 @@
-# React + Vite
+### 1. Menjalankan Proyek
+- Pertama, salin (clone) repositori ini dari GitHub ke komputer lokal anda.
+- Buka cmd, lalu akses folder yang telah selesai di-clone ke komputer lokal. Gunakan perintah cd pdf-viewer-app.
+- Proyek ini menggunakan Node.js dan npm (Node Package Manager). Pastikan anda sudah meng-install Node.js.
+- Lalu jalankan perintah berikut untuk meng-install semua dependencies yang dibutuhkan proyek: "npm install"
+- Setelah semua dependencies ter-install, jalankan perintah berikut untuk memulai: "npm run dev"
+- Setelah server berjalan, buka browser dan akses: http://localhost:5173/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 2. Fitur
+- Zoom in/Zoom Out/Reset
+- Rotate PDF
+- Page Navigation
+- Search & Highlight Result
+- Panning & Drag Gesture. Double tap PDF to return to initial position.
 
-Currently, two official plugins are available:
+## 3. Arsitektur
+- Proyek ini menggunakan **React + Vite** dalam pembuatannya
+- App.jsx – Komponen utama.
+- components/PDFViewer.jsx – Komponen inti untuk merender PDF dan mengatur Fitur.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 4. Dependencies
+- react-pdf: Menampilkan file PDF dalam React - https://github.com/wojtekmaj/react-pdf
+- react-zoom-pan-pinch: Untuk Fitur Drag Gesture - https://github.com/BetterTyped/react-zoom-pan-pinch
+- @fortawesome/react-fontawesome: Ikon yang digunakan - https://github.com/FortAwesome/react-fontawesome
