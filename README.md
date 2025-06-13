@@ -14,7 +14,7 @@
 - Panning & Drag Gesture. Double tap PDF to return to initial position.
 
 ## 3. Arsitektur
-- Proyek ini menggunakan **React + Vite** dalam pembuatannya
+- Proyek ini menggunakan **React + Vite** dalam pembuatannya.
 - App.jsx – Komponen utama.
 - components/PDFViewer.jsx – Komponen inti untuk merender PDF dan mengatur Fitur.
 
