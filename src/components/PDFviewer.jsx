@@ -258,7 +258,7 @@ export default function PDFviewer() {
                             disabled={matchIndexes.length === 0}
                             className="btn btn-primary"
                             title='Previous Result'
-                        ><FontAwesomeIcon icon={faChevronUp} /> </button>
+                        ><FontAwesomeIcon icon={faChevronUp} /></button>
                         
                         <span className='text'>
                             {matchIndexes.length > 0 ? `${activeMatch + 1}/${matchIndexes.length}` : ''}
